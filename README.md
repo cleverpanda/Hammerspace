@@ -1,5 +1,7 @@
 # Hammerspace
 
+https://en.wikipedia.org/wiki/Hammerspace
+
 Pockets that hold far more than they should. A NeoForge 1.21.1 rewrite of p455w0rd's /dank/null for 1.12.2, with a new name and new art.
 
 Each pocket stores a few kinds of item in huge stacks. It picks up items it already holds and places blocks straight from the stack. Hoppers and pipes can reach it when it sits in a Pocket Dock.
