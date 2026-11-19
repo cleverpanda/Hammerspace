@@ -1,0 +1,33 @@
+{
+  "values": {
+    "hammerspace:redstone_pocket": {
+      "rows": 1,
+      "max_per_slot": 256
+    },
+    "hammerspace:lapis_pocket": {
+      "rows": 2,
+      "max_per_slot": 1024
+    },
+    "hammerspace:iron_pocket": {
+      "rows": 3,
+      "max_per_slot": 4096
+    },
+    "hammerspace:gold_pocket": {
+      "rows": 4,
+      "max_per_slot": 16384
+    },
+    "hammerspace:diamond_pocket": {
+      "rows": 5,
+      "max_per_slot": 65536
+    },
+    "hammerspace:emerald_pocket": {
+      "rows": 6,
+      "max_per_slot": 2147483647
+    },
+    "hammerspace:creative_pocket": {
+      "rows": 6,
+      "max_per_slot": 2147483647,
+      "infinite": true
+    }
+  }
+}

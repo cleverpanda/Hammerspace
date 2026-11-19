@@ -1,0 +1,21 @@
+{
+  "type": "hammerspace:pocket_upgrade",
+  "category": "misc",
+  "pattern": [
+    " l ",
+    "lpl",
+    " l "
+  ],
+  "key": {
+    "l": {
+      "item": "hammerspace:emerald_lining"
+    },
+    "p": {
+      "item": "hammerspace:diamond_pocket"
+    }
+  },
+  "result": {
+    "id": "hammerspace:emerald_pocket",
+    "count": 1
+  }
+}

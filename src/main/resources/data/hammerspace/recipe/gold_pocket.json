@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " a ",
+    "aaa",
+    " a "
+  ],
+  "key": {
+    "a": {
+      "item": "hammerspace:gold_lining"
+    }
+  },
+  "result": {
+    "id": "hammerspace:gold_pocket",
+    "count": 1
+  }
+}

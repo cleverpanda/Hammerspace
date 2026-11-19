@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " a ",
+    "aaa",
+    " a "
+  ],
+  "key": {
+    "a": {
+      "item": "hammerspace:emerald_lining"
+    }
+  },
+  "result": {
+    "id": "hammerspace:emerald_pocket",
+    "count": 1
+  }
+}

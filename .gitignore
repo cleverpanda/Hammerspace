@@ -1,0 +1,81 @@
+# eclipse
+bin
+*.launch
+.settings
+.settings/*
+.metadata
+.classpath
+.project
+/.eclipse/
+/.factorypath
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# vscode
+/.vscode/
+/.vscode
+.vscode/*
+.vscode/
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run
+run-data
+run-upgrade
+/run-*/
+logs
+classes
+/crash-reports/
+/screenshots/
+/mcmodsrepo/
+/run.*
+/*.log
+/*.jfr
+/*.hprof
+/hs_err_pid*.log
+/replay_pid*.log
+
+/README.txt
+/forge-*-changelog.txt
+
+/secret.json
+/libs/*
+!/libs/README.txt
+
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# python
+__pycache__/
+*.py[cod]
+
+/bugreport.md
+
+# planning docs, reference sources and images we make: kept local
+art/
+/tools/
+/unused_assets/
+/reference/
+PLAN.md
+PLANNING.md
+DESIGN.md
+TODO.md
+IDEAS.md
+REVIEW.md
+PORT-NOTES.md
+MARKET-RESEARCH*.md
+TEST-CASES.csv
+*-COMPARISON.csv
+ECOSYSTEM-*.md
+CROSS-MOD-NOTES.md
+ecosystem-board.mmd

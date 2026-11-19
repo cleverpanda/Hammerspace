@@ -1,0 +1,167 @@
+plugins {
+    id 'java-library'
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
+    id 'net.neoforged.moddev' version '2.0.148'
+}
+
+def env = System.getenv()
+def tag = providers.environmentVariable('TAG')
+// Release builds are tagged <mc>-<version> on GitHub; local builds get the same name.
+version = tag.orElse("${minecraft_version}-${mod_version}").get()
+group = mod_group
+
+base {
+    archivesName = mod_archive_name
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+    withSourcesJar()
+    withJavadocJar()
+}
+
+// Dev-only code (showcase and game tests); never in the mod's jar.
+sourceSets {
+    dev {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
+neoForge {
+    version = neoforge_version
+    addModdingDependenciesTo sourceSets.dev
+
+    parchment {
+        minecraftVersion = parchment_minecraft_version
+        mappingsVersion = parchment_mappings_version
+    }
+
+    runs {
+        configureEach {
+            gameDirectory = file('run')
+        }
+        client {
+            client()
+        }
+        server {
+            server()
+            gameDirectory = file('run-server')
+            programArgument '--nogui'
+        }
+        // gradlew runShowcase: creative world, fills pockets, checks pickup and placing, screenshots to run/screenshots, quits.
+        showcase {
+            client()
+            sourceSet = sourceSets.dev
+            systemProperty 'hammerspace.showcase', 'true'
+            programArguments.addAll '--width', '1280', '--height', '720'
+        }
+        gameTestServer {
+            type = "gameTestServer"
+            sourceSet = sourceSets.dev
+            gameDirectory = file('run-gametest')
+            systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.dev
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = "Jared's maven (JEI)"
+        url = "https://maven.blamejared.com/"
+        content { includeGroup "mezz.jei" }
+    }
+    maven {
+        name = "Modrinth (Jade)"
+        url = "https://api.modrinth.com/maven"
+        content { includeGroup "maven.modrinth" }
+    }
+}
+
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+}
+
+dependencies {
+    // JEI and Jade are optional: compile against their APIs; the run configs load them for testing only.
+    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+    localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+    compileOnly "maven.modrinth:jade:${jade_version}"
+    localRuntime "maven.modrinth:jade:${jade_version}"
+}
+
+tasks.named('processResources', ProcessResources) {
+    def properties = [
+            minecraft_version_range: minecraft_version_range,
+            neoforge_version_range: neoforge_version_range,
+            loader_version_range: loader_version_range,
+            mod_id: mod_id,
+            mod_name: mod_name,
+            mod_license: mod_license,
+            mod_version: project.version,
+            mod_authors: mod_authors,
+            mod_credits: mod_credits,
+            mod_description: mod_description,
+            curseforge_url: "https://www.curseforge.com/minecraft/mc-mods/${mod_id}",
+            issue_url: issue_url,
+            update_url: update_url
+    ]
+    inputs.properties properties
+    filesMatching('META-INF/neoforge.mods.toml') {
+        expand properties
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = mod_archive_name
+            from components.java
+        }
+    }
+    repositories {
+        if (env.MAVEN_UPLOAD_URL) {
+            maven {
+                url = uri(env.MAVEN_UPLOAD_URL)
+                credentials {
+                    username = env.MAVEN_UPLOAD_USERNAME
+                    password = env.MAVEN_UPLOAD_PASSWORD
+                }
+            }
+        }
+    }
+}
+
+idea {
+    module {
+        downloadSources = true
+    }
+}
+
+eclipse {
+    classpath {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+// Only README and LICENSE ship in the jar; plans and notes stay in the repo.
+tasks.named('jar', Jar) {
+    from('README.md', 'LICENSE.md')
+    exclude { it.name.endsWith('.md') && !(it.name in ['README.md', 'LICENSE.md']) }
+}

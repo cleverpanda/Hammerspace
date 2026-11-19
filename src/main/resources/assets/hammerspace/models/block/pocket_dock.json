@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "hammerspace:block/pocket_dock_top",
+    "side": "hammerspace:block/pocket_dock_side",
+    "bottom": "hammerspace:block/pocket_dock_bottom"
+  }
+}

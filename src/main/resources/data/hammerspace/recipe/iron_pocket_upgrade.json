@@ -1,0 +1,21 @@
+{
+  "type": "hammerspace:pocket_upgrade",
+  "category": "misc",
+  "pattern": [
+    " l ",
+    "lpl",
+    " l "
+  ],
+  "key": {
+    "l": {
+      "item": "hammerspace:iron_lining"
+    },
+    "p": {
+      "item": "hammerspace:lapis_pocket"
+    }
+  },
+  "result": {
+    "id": "hammerspace:iron_pocket",
+    "count": 1
+  }
+}
